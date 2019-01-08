@@ -1,26 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { InstantSearch } from 'react-instantsearch-dom';
+import { SearchBox } from 'react-instantsearch-dom';
+import { Hits } from 'react-instantsearch-dom';
+import { Highlight } from 'react-instantsearch-dom';
+
+const Hit = ({ hit }) =>
+  <div className="hit">
+    <div className="hitImage">
+      <img src={hit.image} />
+    </div>
+    <div className="hitName">
+      <Highlight attribute="name" hit={hit} />
+    </div>
+  </div>
+
+const Content = () =>
+  <div className="content">
+    <Hits hitComponent={Hit} />
+  </div>
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <InstantSearch
+        appId="latency"
+        apiKey="3d9875e51fbd20c7754e65422f7ce5e1"
+        indexName="bestbuy"
+      >
+        <header>
+          <SearchBox translations={{ placeholder: 'Search Box' }} />
         </header>
-      </div>
+        <main>
+          <Content />
+        </main>
+      </InstantSearch>
     );
   }
 }
